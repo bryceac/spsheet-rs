@@ -5,6 +5,7 @@ use spsheet::{Book,Sheet,Cell,column_to_index,index_to_column,column_and_row_to_
 use spsheet::format::Format;
 
 use std::path::Path;
+use pretty_assertions::assert_eq;
 
 #[cfg(feature = "ods")]
 use spsheet::ods;
