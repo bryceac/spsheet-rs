@@ -106,8 +106,9 @@ fn number_to_date(src: &String) -> DateTime<Utc> {
     let timestamp = ((((num - num.floor()) * 86400.0) as f64).round()) as i64;
     let hms = DateTime::from_timestamp(timestamp, 0).expect("unable to get datetime");
     let spreadsheet_epoch = Utc.with_ymd_and_hms(1900, 1, 1, 0, 0, 0).unwrap();
+    let duration = Duration::days(date.day().into()) + Duration::hours(date.hour().into()) + Duration::minutes(date.minute().into()) + Duration::seconds(date.second().into());
 
 
-    let dt = (spreadsheet_epoch + Duration::days(num.floor() as i64 - 2)).and_hms(hms.hour(), hms.minute(), hms.second());
+    let dt = (spreadsheet_epoch + duration);
     dt
 }
