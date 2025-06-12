@@ -7,7 +7,7 @@ use super::quick_xml::Writer;
 use std::io::Cursor;
 use std::io::Write;
 use std::fs::File;
-use file_common::*;
+use crate::file_common::*;
 use super::OdsError;
 
 const CONTENT_XML: &'static str = "content.xml";

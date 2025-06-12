@@ -6,7 +6,7 @@ extern crate tempdir;
 extern crate walkdir;
 extern crate zip;
 
-use file_common::*;
+use crate::file_common::*;
 use std::collections::HashMap;
 use std::io;
 use std::path::Path;

@@ -1,4 +1,4 @@
-use file_common::*;
+use crate::file_common::*;
 use std::io::Cursor;
 use std::result;
 use super::quick_xml::events::{Event, BytesDecl};

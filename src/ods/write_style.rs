@@ -1,7 +1,7 @@
 use super::{Book};
 use super::tempdir::TempDir;
 use std::result;
-use file_common::*;
+use crate::file_common::*;
 use super::OdsError;
 
 const STYLES_XML: &'static str = "styles.xml";
