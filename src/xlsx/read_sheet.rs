@@ -2,7 +2,7 @@ use crate::file_common::*;
 use std::collections::HashMap;
 use std::result;
 // use super::time::Duration;
-use super::chrono::prelude::*;
+use super::chrono::{ Duration, prelude::* };
 use super::quick_xml::Reader;
 use super::quick_xml::events::{Event};
 use super::tempdir::TempDir;
@@ -104,8 +104,8 @@ pub fn read(dir: &TempDir, name: &String, target: &String, shared_strings: &Vec<
 fn number_to_date(src: &String) -> DateTime<Utc> {
     let num = src.parse::<f64>().unwrap();
     let timestamp = ((((num - num.floor()) * 86400.0) as f64).round()) as i64;
-    let hms = NaiveDateTime::from_timestamp(timestamp, 0);
+    let hms = DateTime::from_timestamp(timestamp, 0);
 
-    let dt = (Utc.ymd(1900, 1, 1) + Duration::days(num.floor() as i64 - 2)).and_hms(hms.hour(), hms.minute(), hms.second());
+    let dt = (Utc.with_ymd_and_hms(1900, 1, 1, 0, 0, 0) + Duration::days(num.floor() as i64 - 2)).and_hms(hms.hour(), hms.minute(), hms.second());
     dt
 }
