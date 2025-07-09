@@ -102,6 +102,13 @@ fn year4(input: &str) -> IResult<&str, &str> {
     )).parse(input)
 }
 
+fn year2(input: &str) -> IResult<&str, &str> {
+    alt((
+        value("%Y", tag("yy")),
+        value("%Y", tag("YY"))
+    )).parse(input)
+}
+
 /* named!(year4<&str, &str>, 
     map!(alt!(tag!("yyyy") | tag!("YYYY")), |_| "%Y"));
 
