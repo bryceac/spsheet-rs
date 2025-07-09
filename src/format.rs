@@ -301,6 +301,20 @@ fn ymdhms(input: &str) -> IResult<&str, Vec<Vec<&str>>> {
 fn currency_jp(input: &str) -> IResult<&str, &str> {
     value("{currency_jp}", tag("[$￥-411]")).parse(input)
 }
+
+fn red(input: &str) -> IResult<&str, &str> {
+    alt((
+        value("{{red}}", tag("[赤]")),
+        value("{{red}}", tag("[RED]"))
+    )).parse(input)
+}
+
+fn black(input: &str) -> IResult<&str, &str> {
+    alt((
+        value("{{balack}}", tag("[黒]")),
+        value("{{balack}}", tag("[BLACK]"))
+    )).parse(input)
+}
 /* 
 named!(currency_jp<&str, &str>, 
     map!(tag_s!("[$￥-411]"), |_| "{{currency_jp}}")
