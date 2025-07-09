@@ -8,8 +8,9 @@ use super::nom::{ branch::alt,
     combinator::{ complete, 
         map, 
         value },
+        multi::many0,
     IResult,
-sequence::{ delimited, tuple } };
+sequence::{ delimited } };
 use chrono::prelude::*;
 use nom::Parser;
 use super::era_jp;
@@ -259,7 +260,9 @@ fn special_word(input: &str) -> IResult<&str, &str> {
 }
 
 fn escaped_word(input: &str) -> IResult<&str, &str> {
-    tag("\\").parse(input)
+    let (rest, _) = tag("\\").parse(input)?;
+
+    Ok((rest, ""))
 }
 
 fn quoted_word(input: &str) -> IResult<&str, &str> {
@@ -275,50 +278,30 @@ fn word(input: &str) -> IResult<&str, &str> {
 }
 
 fn hm(input: &str) -> IResult<&str, Vec<&str>> {
-    tuple(hour, word, minute).parse(input)
+    map((hour, word, minute), |(h, w, m)| vec![h, w, m]).parse(input)
+}
+
+fn ms(input: &str) -> IResult<&str, Vec<&str>> {
+    map((minute, word, second), |(m, w, s)| vec![m, w, s]).parse(input)
+}
+
+fn ymdhms(input: &str) -> IResult<&str, Vec<Vec<&str>>> {
+    many0(alt((
+        hm,
+        ms,
+        map(second, |x| vec![x]),
+        map(hour, |x| vec![x]),
+        map(year, |x| vec![x]),
+        map(month, |x| vec![x]),
+        map(day, |x| vec![x]),
+        map(word, |x| vec![x]),
+    ))).parse(input)
+}
+
+fn currency_jp(input: &str) -> IResult<&str, &str> {
+    value("{currency_jp}", tag("[$￥-411]")).parse(input)
 }
 /* 
-named!(hm<&str, Vec<&str> >,
-    do_parse!(
-        h: hour >>
-        w: opt!(word) >>
-        m: minute >>
-        (
-            if let Some(w) = w {
-                vec![h, w ,m] 
-            } else {
-                 vec![h, m] 
-            }
-        )
-    )
-);
-
-named!(ms<&str, Vec<&str> >,
-    do_parse!(
-        m: minute >>
-        w: opt!(word) >>
-        s: second >>
-        (
-            if let Some(w) = w {
-                vec![m, w ,s] 
-            } else {
-                 vec![m, s] 
-            }
-        )
-    )
-);
-
-named!(ymdhms<&str, Vec<Vec<&str>> >,
-    many0!(alt!(hm | ms | 
-        map!(second, |x| vec![x]) |
-        map!(hour, |x| vec![x]) |
-        map!(year, |x| vec![x]) |
-        map!(month, |x| vec![x]) |
-        map!(day, |x| vec![x]) |
-        map!(word, |x| vec![x])
-    ))
-);
-
 named!(currency_jp<&str, &str>, 
     map!(tag_s!("[$￥-411]"), |_| "{{currency_jp}}")
 );
