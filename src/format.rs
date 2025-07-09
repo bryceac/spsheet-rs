@@ -1,7 +1,7 @@
 //! Excel Base Format
 use std::borrow::Cow;
 use super::nom::{ branch::alt, 
-    bytes::complete::tag,
+    bytes::complete::tag_no_case,
     combinator::{ complete, value },
     IResult};
 use chrono::prelude::*;
@@ -96,17 +96,11 @@ impl Format {
 }
 
 fn year4(input: &str) -> IResult<&str, &str> {
-    alt((
-        value("%Y", tag("yyyy")),
-        value("%Y", tag("YYYY"))
-    )).parse(input)
+    value("%Y", tag_no_case("yyyy")).parse(input)
 }
 
 fn year2(input: &str) -> IResult<&str, &str> {
-    alt((
-        value("%Y", tag("yy")),
-        value("%Y", tag("YY"))
-    )).parse(input)
+    value("%Y", tag_no_case("yy")).parse(input)
 }
 
 fn era1(input: &str) -> IResult<&str, &str> {
