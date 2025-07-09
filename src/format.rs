@@ -315,6 +315,13 @@ fn black(input: &str) -> IResult<&str, &str> {
         value("{{balack}}", tag("[BLACK]"))
     )).parse(input)
 }
+
+fn color(input: &str) -> IResult<&str, &str> {
+    alt((
+        red,
+        black
+    )).parse(input)
+}
 /* 
 named!(currency_jp<&str, &str>, 
     map!(tag_s!("[$￥-411]"), |_| "{{currency_jp}}")
