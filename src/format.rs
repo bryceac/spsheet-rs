@@ -9,7 +9,7 @@ use super::nom::{ branch::alt,
         map, 
         value },
     IResult,
-sequence::delimited };
+sequence::{ delimited, tuple } };
 use chrono::prelude::*;
 use nom::Parser;
 use super::era_jp;
@@ -265,28 +265,19 @@ fn escaped_word(input: &str) -> IResult<&str, &str> {
 fn quoted_word(input: &str) -> IResult<&str, &str> {
     delimited(tag("\""), take_until("\""), tag("\"")).parse(input)
 }
-/* named!(special_word<&str, &str>, 
-    map!(alt!(tag!("/") | tag!(":")), |x| x));
 
-named!(escaped_word<&str, &str>, 
-    do_parse!(
-        tag!("\\") >>
-        res: take_s!(1) >>
-        (res)
-    ));
+fn word(input: &str) -> IResult<&str, &str> {
+    alt((
+        complete(quoted_word),
+        complete(escaped_word),
+        complete(special_word)
+    )).parse(input)
+}
 
-named!(quoted_word<&str, &str>,
-    delimited!(tag!("\""), take_until_s!("\""), tag!("\""))
-);
-
-named!(word<&str, &str>, 
-    alt!(
-        complete!(quoted_word) | 
-        complete!(escaped_word) | 
-        complete!(special_word)
-    )
-);
-
+fn hm(input: &str) -> IResult<&str, Vec<&str>> {
+    tuple(hour, word, minute).parse(input)
+}
+/* 
 named!(hm<&str, Vec<&str> >,
     do_parse!(
         h: hour >>
