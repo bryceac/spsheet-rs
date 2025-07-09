@@ -2,7 +2,7 @@
 use std::borrow::Cow;
 use super::nom::{ branch::alt, 
     bytes::complete::tag,
-    combinator::value,
+    combinator::{ complete, value },
     IResult};
 use chrono::prelude::*;
 use nom::Parser;
@@ -141,6 +141,16 @@ fn gengou3(input: &str) -> IResult<&str, &str> {
     alt((
         value("{{gengou3}}", tag("ggg")),
         value("{{gengou3}}", tag("GGG"))
+    )).parse(input)
+}
+
+fn year(input: &str) -> IResult<&str, &str> {
+    alt((
+        complete(year4),
+        complete(year2),
+        complete(gengou1),
+        complete(gengou2),
+        complete(gengou3)
     )).parse(input)
 }
 
