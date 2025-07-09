@@ -123,6 +123,34 @@ fn era2(input: &str) -> IResult<&str, &str> {
     )).parse(input)
 }
 
+fn gengou1(input: &str) -> IResult<&str, &str> {
+    alt((
+        value("{{gengou1}}", tag("g")),
+        value("{{gengou1}}", tag("G"))
+    )).parse(input)
+}
+
+fn gengou1(input: &str) -> IResult<&str, &str> {
+    alt((
+        value("{{gengou1}}", tag("g")),
+        value("{{gengou1}}", tag("G"))
+    )).parse(input)
+}
+
+fn gengou2(input: &str) -> IResult<&str, &str> {
+    alt((
+        value("{{gengou2}}", tag("gg")),
+        value("{{gengou2}}", tag("GG"))
+    )).parse(input)
+}
+
+fn gengou3(input: &str) -> IResult<&str, &str> {
+    alt((
+        value("{{gengou3}}", tag("ggg")),
+        value("{{gengou3}}", tag("GGG"))
+    )).parse(input)
+}
+
 /* named!(year4<&str, &str>, 
     map!(alt!(tag!("yyyy") | tag!("YYYY")), |_| "%Y"));
 
