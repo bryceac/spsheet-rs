@@ -1,8 +1,12 @@
 //! Excel Base Format
 use std::borrow::Cow;
 use super::nom::{ branch::alt, 
-    bytes::complete::tag_no_case,
-    combinator::{ complete, value },
+    bytes::complete::{
+        tag,
+        tag_no_case },
+    combinator::{ complete, 
+        map, 
+        value },
     IResult};
 use chrono::prelude::*;
 use nom::Parser;
@@ -242,6 +246,13 @@ fn second(input: &str) -> IResult<&str, &str> {
     alt((
         complete(hour2),
         complete(hour1)
+    )).parse(input)
+}
+
+fn special_words(input: &str) -> IResult<&str, &str> {
+    alt((
+        map(tag("/"), |x| x),
+        map(tag(":"), |x| x)
     )).parse(input)
 }
 
