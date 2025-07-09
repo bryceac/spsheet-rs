@@ -130,13 +130,6 @@ fn gengou1(input: &str) -> IResult<&str, &str> {
     )).parse(input)
 }
 
-fn gengou1(input: &str) -> IResult<&str, &str> {
-    alt((
-        value("{{gengou1}}", tag("g")),
-        value("{{gengou1}}", tag("G"))
-    )).parse(input)
-}
-
 fn gengou2(input: &str) -> IResult<&str, &str> {
     alt((
         value("{{gengou2}}", tag("gg")),
