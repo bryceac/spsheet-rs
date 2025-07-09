@@ -1,10 +1,11 @@
 //! Excel Base Format
 use std::borrow::Cow;
-use super::nom::{ branch::alt, 
+use super::nom::{ AsChar, branch::alt, 
     bytes::complete::{
         tag,
         tag_no_case,
-    take_until},
+    take_until,
+    take_while1},
     combinator::{ complete, 
         map, 
         value },
@@ -322,24 +323,11 @@ fn color(input: &str) -> IResult<&str, &str> {
         black
     )).parse(input)
 }
-/* 
-named!(currency_jp<&str, &str>, 
-    map!(tag_s!("[$￥-411]"), |_| "{{currency_jp}}")
-);
 
-named!(red<&str, &str>, 
-    map!(alt!(tag_s!("[赤]") | tag_s!("[RED]")), |_| "{{red}}")
-);
-
-named!(black<&str, &str>, 
-    map!(alt!(tag_s!("[黒]") | tag_s!("[BLACK]")), |_| "{{black}}")
-);
-
-named!(color<&str, &str>,
-    alt!(red | black)
-);
-
-named!(number<&str, &str>,
+fn number(input: &str) -> IResult<&str, &str> {
+    take_while1(|c: char| c.is_ascii()).parse(input)
+}
+/* named!(number<&str, &str>,
     take_while1_s!(call!(|c| c == '0' || c == '#' || c == '.' || c == ',' || c == '?'))
 );
 
