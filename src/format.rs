@@ -208,6 +208,43 @@ fn hour2(input: &str) -> IResult<&str, &str> {
     value("%H", tag_no_case("hh")).parse(input)
 }
 
+fn hour(input: &str) -> IResult<&str, &str> {
+    alt((
+        complete(hour2),
+        complete(hour1)
+    )).parse(input)
+}
+
+fn minute1(input: &str) -> IResult<&str, &str> {
+    value("%-M", tag_no_case("h")).parse(input)
+}
+
+fn minute2(input: &str) -> IResult<&str, &str> {
+    value("%M", tag_no_case("hh")).parse(input)
+}
+
+fn minute(input: &str) -> IResult<&str, &str> {
+    alt((
+        complete(minute2),
+        complete(minute1)
+    )).parse(input)
+}
+
+fn second1(input: &str) -> IResult<&str, &str> {
+    value("%-S", tag_no_case("h")).parse(input)
+}
+
+fn second2(input: &str) -> IResult<&str, &str> {
+    value("%S", tag_no_case("hh")).parse(input)
+}
+
+fn second(input: &str) -> IResult<&str, &str> {
+    alt((
+        complete(hour2),
+        complete(hour1)
+    )).parse(input)
+}
+
 /* named!(hour1<&str, &str>, 
     map!(alt!(tag!("h") | tag!("H")), |_| "%-H"));
 
