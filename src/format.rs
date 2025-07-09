@@ -245,46 +245,7 @@ fn second(input: &str) -> IResult<&str, &str> {
     )).parse(input)
 }
 
-/* named!(hour1<&str, &str>, 
-    map!(alt!(tag!("h") | tag!("H")), |_| "%-H"));
-
-named!(hour2<&str, &str>, 
-    map!(alt!(tag!("hh") | tag!("HH")), |_| "%H"));
-
-named!(hour<&str, &str>, 
-    alt!(
-        complete!(hour2) | 
-        complete!(hour1)
-    )
-);
-
-named!(minute1<&str, &str>, 
-    map!(alt!(tag!("m") | tag!("M")), |_| "%-M"));
-
-named!(minute2<&str, &str>, 
-    map!(alt!(tag!("mm") | tag!("MM")), |_| "%M"));
-
-named!(minute<&str, &str>, 
-    alt!(
-        complete!(minute2) | 
-        complete!(minute1)
-    )
-);
-
-named!(second1<&str, &str>, 
-    map!(alt!(tag!("s") | tag!("S")), |_| "%-S"));
-
-named!(second2<&str, &str>, 
-    map!(alt!(tag!("ss") | tag!("SS")), |_| "%S"));
-
-named!(second<&str, &str>, 
-    alt!(
-        complete!(second2) | 
-        complete!(second1)
-    )
-);
-
-named!(special_word<&str, &str>, 
+/* named!(special_word<&str, &str>, 
     map!(alt!(tag!("/") | tag!(":")), |x| x));
 
 named!(escaped_word<&str, &str>, 
