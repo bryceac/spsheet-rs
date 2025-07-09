@@ -1,7 +1,11 @@
 //! Excel Base Format
 use std::borrow::Cow;
-use super::nom::{ branch::alt, bytes::complete::tag, IResult};
+use super::nom::{ branch::alt, 
+    bytes::complete::tag,
+    combinator::value,
+    IResult};
 use chrono::prelude::*;
+use nom::Parser;
 use super::era_jp;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -92,7 +96,10 @@ impl Format {
 }
 
 fn year4(input: &str) -> IResult<&str, &str> {
-
+    alt((
+        value("%Y", tag("yyyy")),
+        value("%Y", tag("YYYY"))
+    )).parse(input)
 }
 
 /* named!(year4<&str, &str>, 
