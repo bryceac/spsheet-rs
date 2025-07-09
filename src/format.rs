@@ -165,6 +165,30 @@ fn month(input: &str) -> IResult<&str, &str> {
     )).parse(input)
 }
 
+fn day1(input: &str) -> IResult<&str, &str> {
+    value("%-d", tag_no_case("d")).parse(input)
+}
+
+fn day2(input: &str) -> IResult<&str, &str> {
+    value("%d", tag_no_case("dd")).parse(input)
+}
+
+fn dow3(input: &str) -> IResult<&str, &str> {
+    value("%a", tag_no_case("ddd")).parse(input)
+}
+
+fn dow4(input: &str) -> IResult<&str, &str> {
+    value("%A", tag_no_case("dddd")).parse(input)
+}
+
+fn youbi3(input: &str) -> IResult<&str, &str> {
+    value("{{youbi3}}", tag_no_case("aaa")).parse(input)
+}
+
+fn youbi4(input: &str) -> IResult<&str, &str> {
+    value("{{youbi4}}", tag_no_case("aaaa")).parse(input)
+}
+
 /* named!(year4<&str, &str>, 
     map!(alt!(tag!("yyyy") | tag!("YYYY")), |_| "%Y"));
 
