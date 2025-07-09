@@ -127,9 +127,11 @@ fn year(input: &str) -> IResult<&str, &str> {
     alt((
         complete(year4),
         complete(year2),
-        complete(gengou1),
+        complete(era2),
+        complete(era1),
+        complete(gengou3),
         complete(gengou2),
-        complete(gengou3)
+        complete(gengou1)
     )).parse(input)
 }
 
@@ -137,20 +139,30 @@ fn month1(input: &str) -> IResult<&str, &str> {
     value("%-m", tag_no_case("m")).parse(input)
 }
 
-fn month1(input: &str) -> IResult<&str, &str> {
-    value("%-m", tag_no_case("m")).parse(input)
+fn month2(input: &str) -> IResult<&str, &str> {
+    value("%m", tag_no_case("mm")).parse(input)
 }
 
-fn month1(input: &str) -> IResult<&str, &str> {
-    value("%-m", tag_no_case("m")).parse(input)
+fn month3(input: &str) -> IResult<&str, &str> {
+    value("%b", tag_no_case("mmm")).parse(input)
 }
 
-fn month1(input: &str) -> IResult<&str, &str> {
-    value("%-m", tag_no_case("m")).parse(input)
+fn month4(input: &str) -> IResult<&str, &str> {
+    value("%B", tag_no_case("mmmm")).parse(input)
 }
 
-fn month1(input: &str) -> IResult<&str, &str> {
-    value("%-m", tag_no_case("m")).parse(input)
+fn month5(input: &str) -> IResult<&str, &str> {
+    value("{{month5}}", tag_no_case("mmmmm")).parse(input)
+}
+
+fn month(input: &str) -> IResult<&str, &str> {
+    alt((
+        complete(month5),
+        complete(month4),
+        complete(month3),
+        complete(month2),
+        complete(month1)
+    )).parse(input)
 }
 
 /* named!(year4<&str, &str>, 
