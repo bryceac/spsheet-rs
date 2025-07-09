@@ -200,6 +200,14 @@ fn day(input: &str) -> IResult<&str, &str> {
     )).parse(input)
 }
 
+fn hour1(input: &str) -> IResult<&str, &str> {
+    value("%-H", tag_no_case("h")).parse(input)
+}
+
+fn hour2(input: &str) -> IResult<&str, &str> {
+    value("%H", tag_no_case("hh")).parse(input)
+}
+
 /* named!(hour1<&str, &str>, 
     map!(alt!(tag!("h") | tag!("H")), |_| "%-H"));
 
