@@ -189,6 +189,17 @@ fn youbi4(input: &str) -> IResult<&str, &str> {
     value("{{youbi4}}", tag_no_case("aaaa")).parse(input)
 }
 
+fn day(input: &str) -> IResult<&str, &str> {
+    alt((
+        complete(youbi4),
+        complete(youbi3),
+        complete(dow4),
+        complete(dow3),
+        complete(day2),
+        complete(day1)
+    )).parse(input)
+}
+
 /* named!(year4<&str, &str>, 
     map!(alt!(tag!("yyyy") | tag!("YYYY")), |_| "%Y"));
 
