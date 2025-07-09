@@ -216,11 +216,11 @@ fn hour(input: &str) -> IResult<&str, &str> {
 }
 
 fn minute1(input: &str) -> IResult<&str, &str> {
-    value("%-M", tag_no_case("h")).parse(input)
+    value("%-M", tag_no_case("m")).parse(input)
 }
 
 fn minute2(input: &str) -> IResult<&str, &str> {
-    value("%M", tag_no_case("hh")).parse(input)
+    value("%M", tag_no_case("mm")).parse(input)
 }
 
 fn minute(input: &str) -> IResult<&str, &str> {
@@ -231,11 +231,11 @@ fn minute(input: &str) -> IResult<&str, &str> {
 }
 
 fn second1(input: &str) -> IResult<&str, &str> {
-    value("%-S", tag_no_case("h")).parse(input)
+    value("%-S", tag_no_case("s")).parse(input)
 }
 
 fn second2(input: &str) -> IResult<&str, &str> {
-    value("%S", tag_no_case("hh")).parse(input)
+    value("%S", tag_no_case("ss")).parse(input)
 }
 
 fn second(input: &str) -> IResult<&str, &str> {
