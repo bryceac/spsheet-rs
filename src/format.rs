@@ -133,6 +133,26 @@ fn year(input: &str) -> IResult<&str, &str> {
     )).parse(input)
 }
 
+fn month1(input: &str) -> IResult<&str, &str> {
+    value("%-m", tag_no_case("m")).parse(input)
+}
+
+fn month1(input: &str) -> IResult<&str, &str> {
+    value("%-m", tag_no_case("m")).parse(input)
+}
+
+fn month1(input: &str) -> IResult<&str, &str> {
+    value("%-m", tag_no_case("m")).parse(input)
+}
+
+fn month1(input: &str) -> IResult<&str, &str> {
+    value("%-m", tag_no_case("m")).parse(input)
+}
+
+fn month1(input: &str) -> IResult<&str, &str> {
+    value("%-m", tag_no_case("m")).parse(input)
+}
+
 /* named!(year4<&str, &str>, 
     map!(alt!(tag!("yyyy") | tag!("YYYY")), |_| "%Y"));
 
