@@ -1,6 +1,6 @@
 //! Excel Base Format
 use std::borrow::Cow;
-use super::nom::{IResult};
+use super::nom::{ branch::alt, bytes::complete::tag, IResult};
 use chrono::prelude::*;
 use super::era_jp;
 
@@ -91,7 +91,11 @@ impl Format {
     }
 }
 
-named!(year4<&str, &str>, 
+fn year4(input: &str) -> IResult<&str, &str> {
+
+}
+
+/* named!(year4<&str, &str>, 
     map!(alt!(tag!("yyyy") | tag!("YYYY")), |_| "%Y"));
 
 named!(year2<&str, &str>, 
@@ -331,4 +335,4 @@ named!(numeric_ary<&str, Vec<Vec<&str> > >,
             (res)
         )
     )
-);
+); */

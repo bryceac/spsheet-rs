@@ -95,8 +95,8 @@ pub fn column_and_row_to_index<'a, S>(value: S) -> Option<(usize, usize)>
         unsafe {
             Some(
                 (
-                    column_to_index(val.slice_unchecked(0, index)), 
-                    val.slice_unchecked(index, val.len()).parse::<usize>().unwrap() - 1
+                    column_to_index(val.get_unchecked(0..index)), 
+                    val.get_unchecked(index..val.len()).parse::<usize>().unwrap() - 1
                 )
             )
         }
