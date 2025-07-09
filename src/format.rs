@@ -104,38 +104,23 @@ fn year2(input: &str) -> IResult<&str, &str> {
 }
 
 fn era1(input: &str) -> IResult<&str, &str> {
-    alt((
-        value("{{era1}}", tag("e")),
-        value("{{era1}}", tag("E"))
-    )).parse(input)
+    value("{{era1}}", tag_no_case("e")).parse(input)
 }
 
 fn era2(input: &str) -> IResult<&str, &str> {
-    alt((
-        value("{{era2}}", tag("ee")),
-        value("{{era2}}", tag("EE"))
-    )).parse(input)
+    value("{{era2}}", tag_no_case("ee")).parse(input)
 }
 
 fn gengou1(input: &str) -> IResult<&str, &str> {
-    alt((
-        value("{{gengou1}}", tag("g")),
-        value("{{gengou1}}", tag("G"))
-    )).parse(input)
+    value("{{gengou1}}", tag_no_case("g")).parse(input)
 }
 
 fn gengou2(input: &str) -> IResult<&str, &str> {
-    alt((
-        value("{{gengou2}}", tag("gg")),
-        value("{{gengou2}}", tag("GG"))
-    )).parse(input)
+    value("{{era1}}", tag_no_case("gg")).parse(input)
 }
 
 fn gengou3(input: &str) -> IResult<&str, &str> {
-    alt((
-        value("{{gengou3}}", tag("ggg")),
-        value("{{gengou3}}", tag("GGG"))
-    )).parse(input)
+    value("{{era1}}", tag_no_case("ggg")).parse(input)
 }
 
 fn year(input: &str) -> IResult<&str, &str> {
