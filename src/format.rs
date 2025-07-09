@@ -3,11 +3,13 @@ use std::borrow::Cow;
 use super::nom::{ branch::alt, 
     bytes::complete::{
         tag,
-        tag_no_case },
+        tag_no_case,
+    take_until},
     combinator::{ complete, 
         map, 
         value },
-    IResult};
+    IResult,
+sequence::delimited };
 use chrono::prelude::*;
 use nom::Parser;
 use super::era_jp;
@@ -256,10 +258,13 @@ fn special_word(input: &str) -> IResult<&str, &str> {
     )).parse(input)
 }
 
-fn escaped_words(input: &str) -> IResult<&str, &str> {
-
+fn escaped_word(input: &str) -> IResult<&str, &str> {
+    tag("\\").parse(input)
 }
 
+fn quoted_word(input: &str) -> IResult<&str, &str> {
+    delimited(tag("\""), take_until("\""), tag("\"")).parse(input)
+}
 /* named!(special_word<&str, &str>, 
     map!(alt!(tag!("/") | tag!(":")), |x| x));
 
