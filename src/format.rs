@@ -249,11 +249,15 @@ fn second(input: &str) -> IResult<&str, &str> {
     )).parse(input)
 }
 
-fn special_words(input: &str) -> IResult<&str, &str> {
+fn special_word(input: &str) -> IResult<&str, &str> {
     alt((
         map(tag("/"), |x| x),
         map(tag(":"), |x| x)
     )).parse(input)
+}
+
+fn escaped_words(input: &str) -> IResult<&str, &str> {
+
 }
 
 /* named!(special_word<&str, &str>, 
