@@ -34,7 +34,7 @@ impl Format {
         where S: Into<Cow<'a, str>>
     {
         match ymdhms(value.into().into_owned().as_str()) {
-            IResult::Done(_, output) => true,
+            IResult::Ok((_, _)) => true,
             _ => false
         }
     }
@@ -43,7 +43,7 @@ impl Format {
     where S: Into<Cow<'a, str>>
     {
         match numeric_ary(value.into().into_owned().as_str()) {
-            IResult::Done(_, output) => true,
+            IResult::Ok((_, _)) => true,
             _ => false
         }
     }
@@ -54,7 +54,7 @@ impl Format {
 
     pub fn get_date_formats(&self) -> Option<Vec<&str>> {
         match ymdhms(self.content.as_str()) {
-            IResult::Done(_, output) => {
+            IResult::Ok((_, output)) => {
                 let mut result = vec![];
                 for i in output {
                     for j in i {
@@ -69,7 +69,7 @@ impl Format {
 
     pub fn get_formated_date(&self, dt: &DateTime<Utc>) -> Option<String> {
         match ymdhms(self.content.as_str()) {
-            IResult::Done(_, output) => {
+            IResult::Ok((_, output)) => {
                 let mut format = String::from("");
                 let era_year = era_jp::get_year(dt);
                 for item_ary in output {
