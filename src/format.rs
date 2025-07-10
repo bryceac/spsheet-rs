@@ -125,11 +125,11 @@ fn gengou1(input: &str) -> IResult<&str, &str> {
 }
 
 fn gengou2(input: &str) -> IResult<&str, &str> {
-    value("{{era1}}", tag_no_case("gg")).parse(input)
+    value("{{gengou2}}", tag_no_case("gg")).parse(input)
 }
 
 fn gengou3(input: &str) -> IResult<&str, &str> {
-    value("{{era1}}", tag_no_case("ggg")).parse(input)
+    value("{{gengou3}}", tag_no_case("ggg")).parse(input)
 }
 
 fn year(input: &str) -> IResult<&str, &str> {
