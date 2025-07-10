@@ -248,8 +248,8 @@ fn second2(input: &str) -> IResult<&str, &str> {
 
 fn second(input: &str) -> IResult<&str, &str> {
     alt((
-        complete(hour2),
-        complete(hour1)
+        complete(second2),
+        complete(second1)
     )).parse(input)
 }
 
