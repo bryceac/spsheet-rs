@@ -1,6 +1,6 @@
 //! Excel Base Format
 use std::borrow::Cow;
-use super::nom::{ AsChar, branch::alt, 
+use super::nom::{ branch::alt, 
     bytes::complete::{
         tag,
         tag_no_case,
@@ -9,7 +9,7 @@ use super::nom::{ AsChar, branch::alt,
     combinator::{ complete, 
         map, 
         value },
-        multi::many0,
+        multi::{ many0, many_m_n },
     IResult,
 sequence::{ delimited } };
 use chrono::prelude::*;
@@ -327,39 +327,39 @@ fn color(input: &str) -> IResult<&str, &str> {
 fn number(input: &str) -> IResult<&str, &str> {
     take_while1(|c: char| c.is_ascii()).parse(input)
 }
-/* named!(number<&str, &str>,
-    take_while1_s!(call!(|c| c == '0' || c == '#' || c == '.' || c == ',' || c == '?'))
-);
 
-named!(numeric<&str, Vec<&str> >,
-    do_parse!(
-        c: opt!(color) >>
-        w1: many0!(alt!(word | currency_jp)) >>
-        nums: number >>
-        w2: many0!(alt!(word | currency_jp)) >>
-        ({
-            let mut res = vec![];
-            if let Some(n) = c {
-                res.push(n);
-            }
-            for item in w1 {
-                res.push(item);
-            }
-            res.push(nums);
-            for item in w2 {
-                res.push(item);
-            }
-            res
-        })
-    )
-);
+fn numeric(input: &str) -> IResult<&str, Vec<&str>> {
+    map((color, many0(
+        alt((
+            word,
+            currency_jp
+        ))
+    ), number, many0(
+        alt((
+            word,
+            currency_jp
+        ))
+    )), |(color, word1, number, word2)| {
+        let mut res = vec![];
 
-named!(numeric_ary<&str, Vec<Vec<&str> > >,
-    many_m_n!(1,4,
-        do_parse!(
-            opt!(tag_s!(";")) >>
-            res: numeric >>
-            (res)
-        )
-    )
-); */
+        res.push(color);
+
+        for item in word1 {
+            res.push(item);
+        }
+
+        res.push(number);
+
+        for item in word2 {
+            res.push(item);
+        }
+
+        res
+    }).parse(input)
+}
+
+fn numeric_ary(input: &str) -> IResult<&str, Vec<Vec<&str>>> {
+    many_m_n(1, 4, map(
+        (tag(";"), numeric), 
+        |(_, res)| res)).parse(input)
+}
