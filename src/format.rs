@@ -4,6 +4,7 @@ use super::nom::{ branch::alt,
     bytes::complete::{
         tag,
         tag_no_case,
+        take,
     take_until,
     take_while1},
     combinator::{ complete, 
@@ -261,9 +262,10 @@ fn special_word(input: &str) -> IResult<&str, &str> {
 }
 
 fn escaped_word(input: &str) -> IResult<&str, &str> {
-    let (rest, _) = tag("\\").parse(input)?;
+    /* let (rest, _) = tag("\\").parse(input)?;
 
-    Ok((rest, ""))
+    Ok((rest, "")) */
+    map((tag("//"), take(1u8)), |(_, rest)| rest).parse(input)
 }
 
 fn quoted_word(input: &str) -> IResult<&str, &str> {
